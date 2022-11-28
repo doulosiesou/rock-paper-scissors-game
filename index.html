@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            height: 100vh;
+            background-color: #dbf39a;
+        }
+
+        input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            padding: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .label {
+            margin: 10px;
+        }
+
+        .submit {
+            margin: 10px;
+        }
+
+        .rules {
+            margin: 0;
+            padding: 4px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>Welcome to my Rock, Paper, Scissors game</h1>
+        <p class="rules">The rules of this game are:</p>
+        <p class="rules">rock beats scissors</p>
+        <p class="rules">scissors beats paper</p>
+        <p class="rules">paper beats rock</p>
+        <p class="rules">Tie: go again</p>
+
+
+        <h2>Enter your choice below</h2>
+    </div>
+    <div class="container">
+        <form action="#" id="userInput">
+            <label for="choice" class="label">Enter your choice</label>
+            <select name="choices" id="choice">
+            <option value="rock">rock</option>
+            <option value="paper">paper</option>
+            <option value="scissors">scissors</option>
+            
+            </select>
+            <input type="submit" value="Submit" class="submit" />
+        </form>
+    </div>
+    <div class="results">
+        <h1></h1>
+    </div>
+    <button class="reset">Go Again</button>
+    <script>
+        let criteria =[];
+        let computerChoice;
+        criteria[0] = "rock";
+        criteria[1] = "paper";
+        criteria[2] = "scissors";
+
+        let randomNumber = Math.floor(Math.random() * 3);
+
+        computerChoice = criteria[randomNumber];
+        console.log(`Random number was ${randomNumber} Computer choice was ${computerChoice}`);
+        const form = document.getElementById('userInput');
+        const result = document.querySelector('.results');
+        const button = document.querySelector('.reset');
+
+        const evalChoices = function(playerChoice, computerChoice) {
+            let pc = playerChoice;
+            let cc = computerChoice;
+            let result = ""
+            // if (pc === "rock" && cc === "rock") {
+            //     return "tie go again"
+            // } else if (pc === "rock" && cc === "paper") {
+            //     return "paper beats rock you lose :("
+            // } else if (pc === "rock" && cc === "scissors") {
+            //     return "rock beats scissors, YOU WIN!!!"
+            // } else if (pc === "paper" && cc ==="paper") {
+            //     return "tie go again"
+            // } else if (pc === "paper" && cc ==="rock") {
+            //     return "paper beats rock, YOU WIN!!!"
+            // } else if (pc = "paper" && cc === "scissors") {
+            //     return "scissors beat paper you lose :("
+            // } else if (pc = "scissors" && cc === "scissors") {
+            //     return "tie go again"
+            // } else if (pc = "scissors" && cc === "rock") {
+            //     return "rock beats scissors, you lose :("
+            // } else {
+            //     return "scissors beats paper, YOU WIN!!!"
+            // }
+            switch (true) {
+                case(pc === "rock" && cc === "rock"): 
+                    return "tie go again"
+                case(pc === "rock" && cc === "paper"): 
+                    return "paper beats rock you lose :("
+                case(pc === "rock" && cc === "scissors"): 
+                    return "rock beats scissors, YOU WIN!!!"
+                case(pc === "paper" && cc ==="paper"):
+                    return "tie go again"
+                case(pc === "paper" && cc ==="rock"):
+                    return "paper beats rock, YOU WIN!!!"
+                case(pc === "paper" && cc === "scissors"):
+                    return "scissors beat paper you lose :("
+                case(pc === "scissors" && cc === "scissors"): 
+                    return "tie go again"
+                case(pc === "scissors" && cc === "rock"):
+                    return "rock beats scissors, you lose :("
+                case(pc === "scissors" && cc === "paper"):
+                    return "scissors beats paper, YOU WIN!!!"
+            }
+        }
+        
+
+        form.addEventListener('submit', (event) => {
+            // handle the form data
+            event.preventDefault();
+            let playerChoice =  document.getElementById('choice').value;
+            console.log(`Player choice is ${playerChoice} computer's choice is ${computerChoice}`);
+
+            // call evalChoices
+            result.innerHTML = `The computer chose ${computerChoice} and ${evalChoices(playerChoice, computerChoice)}`;
+        });
+
+        button.addEventListener('click', (event) => {
+            location.reload()
+        });
+
+    </script>
+</body>
+</html>
