@@ -29,8 +29,9 @@
 
         .container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            gap: 15px;
         }
 
         .intro {
@@ -53,6 +54,11 @@
             padding: 4px;
         }
 
+        .winner {
+            font-size: 36px;
+            font-weight: 700;            
+        }
+
 
     </style>
 </head>
@@ -64,100 +70,115 @@
         <p class="rules">scissors beats paper</p>
         <p class="rules">paper beats rock</p>
         <p class="rules">Tie: go again</p>
+        <p class="rules">Play to 5</p>
 
 
         <h2>Enter your choice below</h2>
     </div>
     <div class="container">
-        <form action="#" id="userInput">
-            <label for="choice" class="label">Enter your choice</label>
-            <select name="choices" id="choice">
+        <label for="choices" class="label">Enter your choice</label>
+        <select name="choices" id="choice">
             <option value="rock">rock</option>
             <option value="paper">paper</option>
             <option value="scissors">scissors</option>
-            
-            </select>
-            <input type="submit" value="Submit" class="submit" />
-        </form>
+        </select>
+        <button id = "play" onclick="game()">Play Computer</button>
     </div>
-    <div class="results">
-        <h1></h1>
-    </div>
-    <button class="reset">Go Again</button>
+    
+    <div class="results"></div>
+    <div class = "winner"></div>
+    
     <script>
-        let criteria =[];
+        // Declare variables
+        let result = document.querySelector('.results');
+        let winnerText = document.querySelector('.winner');
+        let winner;
+        let summary = "";
+                
+        let userWins = 0;
+        let compWins = 0;
+        let playerChoice;
         let computerChoice;
-        criteria[0] = "rock";
-        criteria[1] = "paper";
-        criteria[2] = "scissors";
+        let score;
+        let target = true
+        let criteria =[];
+          criteria[0] = "rock";
+          criteria[1] = "paper";
+          criteria[2] = "scissors";
 
-        let randomNumber = Math.floor(Math.random() * 3);
+        function getCompChoice() {
+            let randomNumber = Math.floor(Math.random() * 3);
+            return criteria[randomNumber];
+        }
 
-        computerChoice = criteria[randomNumber];
-        console.log(`Random number was ${randomNumber} Computer choice was ${computerChoice}`);
-        const form = document.getElementById('userInput');
-        const result = document.querySelector('.results');
-        const button = document.querySelector('.reset');
+        function getPlayerChoice() {
+            selectElement = document.querySelector('#choice');
+            return selectElement.value;
+        };
 
-        const evalChoices = function(playerChoice, computerChoice) {
-            let pc = playerChoice;
-            let cc = computerChoice;
-            let result = ""
-            // if (pc === "rock" && cc === "rock") {
-            //     return "tie go again"
-            // } else if (pc === "rock" && cc === "paper") {
-            //     return "paper beats rock you lose :("
-            // } else if (pc === "rock" && cc === "scissors") {
-            //     return "rock beats scissors, YOU WIN!!!"
-            // } else if (pc === "paper" && cc ==="paper") {
-            //     return "tie go again"
-            // } else if (pc === "paper" && cc ==="rock") {
-            //     return "paper beats rock, YOU WIN!!!"
-            // } else if (pc = "paper" && cc === "scissors") {
-            //     return "scissors beat paper you lose :("
-            // } else if (pc = "scissors" && cc === "scissors") {
-            //     return "tie go again"
-            // } else if (pc = "scissors" && cc === "rock") {
-            //     return "rock beats scissors, you lose :("
-            // } else {
-            //     return "scissors beats paper, YOU WIN!!!"
-            // }
+        function evalChoices(pc, cc) {
+            
             switch (true) {
                 case(pc === "rock" && cc === "rock"): 
-                    return "tie go again"
+                    return "tie" 
                 case(pc === "rock" && cc === "paper"): 
-                    return "paper beats rock you lose :("
+                    return "computer";
                 case(pc === "rock" && cc === "scissors"): 
-                    return "rock beats scissors, YOU WIN!!!"
+                    return "player";
                 case(pc === "paper" && cc ==="paper"):
-                    return "tie go again"
+                    return "tie";
                 case(pc === "paper" && cc ==="rock"):
-                    return "paper beats rock, YOU WIN!!!"
+                    return  "player";
                 case(pc === "paper" && cc === "scissors"):
-                    return "scissors beat paper you lose :("
+                    return "computer";
                 case(pc === "scissors" && cc === "scissors"): 
-                    return "tie go again"
+                    return "tie";
                 case(pc === "scissors" && cc === "rock"):
-                    return "rock beats scissors, you lose :("
+                    return "computer";
                 case(pc === "scissors" && cc === "paper"):
-                    return "scissors beats paper, YOU WIN!!!"
-            }
+                    return "player";
+            };
+        };
+
+        function printScore() {
+            score = `You have won ${userWins} times and the computer has won ${compWins} times`;
+            summary = summary + `The computer chose ${computerChoice} and 
+                                player chose ${playerChoice} the winner is ${winner} <br> ${score}<br>` 
+            result.innerHTML = summary
+            summary = "";
         }
-        
+        // Start the game
+        function game() {
 
-        form.addEventListener('submit', (event) => {
-            // handle the form data
-            event.preventDefault();
-            let playerChoice =  document.getElementById('choice').value;
-            console.log(`Player choice is ${playerChoice} computer's choice is ${computerChoice}`);
+            // Get the computer's choice
+            computerChoice = getCompChoice();
+                        
+            // Get the player's choice
+            playerChoice = getPlayerChoice();
+            
+            // Evaluate choices to see who won
+            winner = evalChoices(playerChoice, computerChoice);
+                        
+            //Check to see who won and tally the results
+            if (winner === "player") {
+                userWins ++;
+                printScore();
 
-            // call evalChoices
-            result.innerHTML = `The computer chose ${computerChoice} and ${evalChoices(playerChoice, computerChoice)}`;
-        });
-
-        button.addEventListener('click', (event) => {
-            location.reload()
-        });
+                if (userWins === 5) {
+                    winnerText.innerHTML = "YOU WIN!!"
+                    return
+                } 
+            } else if (winner ==="computer") {
+                compWins ++;
+                printScore();
+                if (compWins === 5) {
+                    winnerText.innerHTML = "Sorry, you lose :(";
+                    return
+                }
+            } else {
+                printScore();
+            }
+        };
 
     </script>
 </body>
