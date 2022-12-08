@@ -1,4 +1,3 @@
 # rock-paper-scissors-game
-Console rock paper scissors game
-
-Game is to be played entirely from the console.
+Version 2.0
+Updated to play from buttons (images)
