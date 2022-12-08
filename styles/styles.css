@@ -1,0 +1,102 @@
+.heading {
+    margin: 0;
+    padding: 10px;
+    background-color: bisque;
+    border: groove 10px darkkhaki;
+}
+
+#directions {
+    width: 150px;
+    font-size: 20px;
+    border: groove 5px black;
+}
+
+.choices.player {
+    
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+.pchoices {
+    border: groove 15px red;
+    background-color: rgba(210, 105, 30, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cchoices {
+    border: groove 15px blue;
+    background-color: rgba(30, 144, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player.text, .computer.text {
+    font-size: 72px;
+    font-weight: 900;
+    margin: 5px;
+}
+
+.choices.computer {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+.img.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.img.text {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+image {
+    width: auto;
+}
+
+h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10vw;
+}
+
+.winner {
+    background-color: darkseagreen;
+    border: groove purple 10px;
+    font-size: 72px;
+    font-weight: 700;            
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wtext {
+    margin: 0;
+}
+
+.img.input:hover {
+    border: solid 5px white;
+}
+
+.results {
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    border: groove 10px purple;
+    padding: 0 5px 0 5px;
+    font-size: 36px;
+    font-weight: 700;
+}

@@ -5,181 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors Game</title>
+    <link rel="stylesheet" href="./styles/styles.css">
     <style>
         body {
             display: flex;
             flex-direction: column;
+            gap: 20px;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            height: 100vh;
-            background-color: #dbf39a;
-        }
-
-        input {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-        }
-
-        h1, h2 {
-            padding: 10px;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .intro {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .label {
-            margin: 10px;
-        }
-
-        .submit {
-            margin: 10px;
-        }
-
-        .rules {
             margin: 0;
-            padding: 4px;
+            height: 100vh;
+            background-image: url('./images/colloseum.png');
+            background-size: cover;
         }
-
-        .winner {
-            font-size: 36px;
-            font-weight: 700;            
-        }
-
-
     </style>
 </head>
 <body>
-    <div class="intro">
+    <div class="heading">
         <h1>Welcome to my Rock, Paper, Scissors game</h1>
-        <p class="rules">The rules of this game are:</p>
-        <p class="rules">rock beats scissors</p>
-        <p class="rules">scissors beats paper</p>
-        <p class="rules">paper beats rock</p>
-        <p class="rules">Tie: go again</p>
-        <p class="rules">Play to 5</p>
-
-
-        <h2>Enter your choice below</h2>
     </div>
+    <button id="directions">Directions</button>
     <div class="container">
-        <label for="choices" class="label">Enter your choice</label>
-        <select name="choices" id="choice">
-            <option value="rock">rock</option>
-            <option value="paper">paper</option>
-            <option value="scissors">scissors</option>
-        </select>
-        <button id = "play" onclick="game()">Play Computer</button>
+        <div class="pchoices">
+            <div class="choices player">
+                <div class="img card">
+                    <input type="image" src="./images/rock_hand.png" class="img input rock"/>
+                    <p class = "img text">Rock</p>
+                </div>
+                <div class="img card">
+                    <input type="image" src="./images/paper_hand.png" class="img input paper"/>
+                    <p class = "img text">Paper</p>
+                </div>
+                <div class="img card">
+                    <input type="image" src="./images/scissors_hand.png" class="img input scissors"/>
+                    <p class = "img text">Scissors</p>
+                </div>
+            </div>
+            <p class="player text">Player</p>
+        </div>
+        <div class = "winner">
+            <p class="wtext"></p>
+        </div>
+        <div class="cchoices">
+            <div class="choices computer">
+                <div class="img card">
+                    <input type="image" src="./images/rock_hand.png" class="img computer rock"/>
+                    <p class = "img text">Rock</p>
+                </div>
+                <div class="img card">
+                    <input type="image" src="./images/paper_hand.png" class="img computer paper"/>
+                    <p class = "img text">Paper</p>
+                </div>
+                <div class="img card">
+                    <input type="image" src="./images/scissors_hand.png" class="img computer scissors"/>
+                    <p class = "img text">Scissors</p>
+                </div>
+            </div>
+            <p class="computer text">Computer</p>
+        </div>
     </div>
     
-    <div class="results"></div>
-    <div class = "winner"></div>
+    <p class = "results"></p>
     
-    <script>
-        // Declare variables
-        let result = document.querySelector('.results');
-        let winnerText = document.querySelector('.winner');
-        let winner;
-        let summary = "";
-                
-        let userWins = 0;
-        let compWins = 0;
-        let playerChoice;
-        let computerChoice;
-        let score;
-        let target = true
-        let criteria =[];
-          criteria[0] = "rock";
-          criteria[1] = "paper";
-          criteria[2] = "scissors";
-
-        function getCompChoice() {
-            let randomNumber = Math.floor(Math.random() * 3);
-            return criteria[randomNumber];
-        }
-
-        function getPlayerChoice() {
-            selectElement = document.querySelector('#choice');
-            return selectElement.value;
-        };
-
-        function evalChoices(pc, cc) {
-            
-            switch (true) {
-                case(pc === "rock" && cc === "rock"): 
-                    return "tie" 
-                case(pc === "rock" && cc === "paper"): 
-                    return "computer";
-                case(pc === "rock" && cc === "scissors"): 
-                    return "player";
-                case(pc === "paper" && cc ==="paper"):
-                    return "tie";
-                case(pc === "paper" && cc ==="rock"):
-                    return  "player";
-                case(pc === "paper" && cc === "scissors"):
-                    return "computer";
-                case(pc === "scissors" && cc === "scissors"): 
-                    return "tie";
-                case(pc === "scissors" && cc === "rock"):
-                    return "computer";
-                case(pc === "scissors" && cc === "paper"):
-                    return "player";
-            };
-        };
-
-        function printScore() {
-            score = `You have won ${userWins} times and the computer has won ${compWins} times`;
-            summary = summary + `The computer chose ${computerChoice} and 
-                                player chose ${playerChoice} the winner is ${winner} <br> ${score}<br>` 
-            result.innerHTML = summary
-            summary = "";
-        }
-        // Start the game
-        function game() {
-
-            // Get the computer's choice
-            computerChoice = getCompChoice();
-                        
-            // Get the player's choice
-            playerChoice = getPlayerChoice();
-            
-            // Evaluate choices to see who won
-            winner = evalChoices(playerChoice, computerChoice);
-                        
-            //Check to see who won and tally the results
-            if (winner === "player") {
-                userWins ++;
-                printScore();
-
-                if (userWins === 5) {
-                    winnerText.innerHTML = "YOU WIN!!"
-                    return
-                } 
-            } else if (winner ==="computer") {
-                compWins ++;
-                printScore();
-                if (compWins === 5) {
-                    winnerText.innerHTML = "Sorry, you lose :(";
-                    return
-                }
-            } else {
-                printScore();
-            }
-        };
-
-    </script>
+    <script src="javascript.js"></script>
 </body>
 </html>
